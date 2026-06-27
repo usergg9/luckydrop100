@@ -2,10 +2,9 @@ const client = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 let user=null;
 let currentPrize=null;
-let revealed=false;
 let drawing=false;
 
-/* ===== PREMIOS ===== */
+/* PREMIOS */
 const prizes=[
   {name:"🪨 Piedra",chance:35},
   {name:"🪙 Moneda",chance:25},
@@ -16,7 +15,7 @@ const prizes=[
   {name:"🌌 LEGENDARIO",chance:1}
 ];
 
-function generate(){
+function getPrize(){
   let r=Math.random()*100;
   let acc=0;
   for(let p of prizes){
@@ -25,115 +24,97 @@ function generate(){
   }
 }
 
-/* ===== SCRATCH ===== */
+/* SCRATCH */
 const canvas=document.getElementById("scratchCanvas");
 const ctx=canvas.getContext("2d");
 
 function resize(){
   canvas.width=canvas.offsetWidth;
   canvas.height=canvas.offsetHeight;
-
   ctx.fillStyle="#999";
   ctx.fillRect(0,0,canvas.width,canvas.height);
 }
-
 resize();
 
+/* SAFE DOM */
+const $ = id => document.getElementById(id);
+
+/* MENU */
+function openMenu(){
+  $("sideMenu").classList.remove("hidden");
+  $("overlay").classList.remove("hidden");
+}
+function closeMenu(){
+  $("sideMenu").classList.add("hidden");
+  $("overlay").classList.add("hidden");
+}
+
+/* NAV */
+function showAvatars(){
+  $("menuMain").classList.add("hidden");
+  $("menuAvatars").classList.remove("hidden");
+}
+function showRewards(){
+  $("menuMain").classList.add("hidden");
+  $("menuRewards").classList.remove("hidden");
+}
+function back(){
+  $("menuAvatars").classList.add("hidden");
+  $("menuRewards").classList.add("hidden");
+  $("menuMain").classList.remove("hidden");
+}
+
+/* AUTH */
+function showLogin(){
+  $("loginBox").classList.remove("hidden");
+  $("registerBox").classList.add("hidden");
+}
+function showRegister(){
+  $("registerBox").classList.remove("hidden");
+  $("loginBox").classList.add("hidden");
+}
+
+/* SCRATCH */
 function scratch(x,y){
   ctx.globalCompositeOperation="destination-out";
   ctx.beginPath();
   ctx.arc(x,y,25,0,Math.PI*2);
   ctx.fill();
 
-  check();
-}
-
-function check(){
-  if(revealed) return;
-
-  const img=ctx.getImageData(0,0,canvas.width,canvas.height);
-  let clear=0;
-
-  for(let i=0;i<img.data.length;i+=4){
-    if(img.data[i+3]===0) clear++;
-  }
-
-  let percent=(clear/(canvas.width*canvas.height))*100;
-
-  if(percent>60){
-    revealed=true;
-    document.getElementById("prizeReveal").innerText=currentPrize;
-
-    document.getElementById("prizeReveal").style.transform="scale(1.2)";
-    setTimeout(()=>{
-      document.getElementById("prizeReveal").style.transform="scale(1)";
-    },300);
-  }
+  $("prizeReveal").innerText=currentPrize;
 }
 
 /* INIT */
 window.onload=()=>{
-  currentPrize=generate();
+  currentPrize=getPrize();
+  $("prizeReveal").innerText="🎁 ???";
 };
 
-/* EVENTS */
-canvas.onmousedown=()=>drawing=true;
-canvas.onmouseup=()=>drawing=false;
+/* EVENTS SAFE */
+canvas.addEventListener("mousedown",()=>drawing=true);
+canvas.addEventListener("mouseup",()=>drawing=false);
 
-canvas.onmousemove=(e)=>{
+canvas.addEventListener("mousemove",(e)=>{
   if(!drawing) return;
-  let r=canvas.getBoundingClientRect();
+  const r=canvas.getBoundingClientRect();
   scratch(e.clientX-r.left,e.clientY-r.top);
-};
+});
 
-/* MENU */
-function openMenu(){
-  document.getElementById("sideMenu").classList.remove("hidden");
-  document.getElementById("overlay").classList.remove("hidden");
-}
+/* EXPORT GLOBAL (🔥 FIX TU ERROR) */
+window.openMenu=openMenu;
+window.closeMenu=closeMenu;
+window.showAvatars=showAvatars;
+window.showRewards=showRewards;
+window.back=back;
+window.showLogin=showLogin;
+window.showRegister=showRegister;
 
-document.getElementById("profileBtn").onclick=openMenu;
-
-document.getElementById("overlay").onclick=()=>{
-  document.getElementById("sideMenu").classList.add("hidden");
-  document.getElementById("overlay").classList.add("hidden");
-};
-
-/* NAV */
-function openAvatars(){
-  document.getElementById("menuMain").classList.add("hidden");
-  document.getElementById("menuAvatars").classList.remove("hidden");
-}
-
-function openRewards(){
-  document.getElementById("menuMain").classList.add("hidden");
-  document.getElementById("menuRewards").classList.remove("hidden");
-
-  loadRewards();
-}
-
-function backMenu(){
-  document.getElementById("menuAvatars").classList.add("hidden");
-  document.getElementById("menuRewards").classList.add("hidden");
-  document.getElementById("menuMain").classList.remove("hidden");
-}
-
-/* REWARDS */
-async function loadRewards(){
-  if(!user) return;
-  let {data}=await client.from("rewards").select("*").eq("user_id",user.id);
-
-  document.getElementById("myRewards").innerHTML=
-    data.map(r=>"🎁 "+r.reward_name).join("<br>");
-}
-
-/* AUTH UI */
-function showLogin(){
-  document.getElementById("loginBox").classList.remove("hidden");
-  document.getElementById("registerBox").classList.add("hidden");
-}
-
-function showRegister(){
-  document.getElementById("registerBox").classList.remove("hidden");
-  document.getElementById("loginBox").classList.add("hidden");
-}
+/* BUTTONS SAFE BIND */
+$("profileBtn").onclick=openMenu;
+$("overlay").onclick=closeMenu;
+$("btnAvatars").onclick=showAvatars;
+$("btnRewards").onclick=showRewards;
+$("backMenu1").onclick=back;
+$("backMenu2").onclick=back;
+$("showLogin").onclick=showLogin;
+$("showRegister").onclick=showRegister;
