@@ -5,110 +5,131 @@ const client = window.supabase.createClient(
 
 let user = null;
 let currentReward = null;
-let tries = 3;
+
+/* AVATARES */
+const avatars = ["👽","🤖","🐱","🐶","🦊","🐼","🐸","🦁","🐵","🐷"];
 
 /* PREMIOS */
 const rewards = [
-  { name: "💩 Piedra", chance: 35 },
-  { name: "🪙 Moneda", chance: 25 },
-  { name: "🍀 Suerte", chance: 15 },
-  { name: "💎 Cristal", chance: 12 },
-  { name: "🧠 IA", chance: 8 },
-  { name: "👑 Corona", chance: 4 },
-  { name: "🌌 LEGENDARIO", chance: 1 }
+  "💩 Piedra",
+  "🪙 Moneda",
+  "🍀 Suerte",
+  "💎 Cristal",
+  "🧠 IA",
+  "👑 Corona",
+  "🌌 LEGENDARIO"
 ];
 
-/* RASCA REAL (CANVAS) */
+/* SCRATCH */
 const canvas = document.getElementById("scratchCanvas");
 const ctx = canvas.getContext("2d");
 
-function resizeCanvas() {
+function resize() {
   canvas.width = canvas.offsetWidth;
   canvas.height = canvas.offsetHeight;
 
   ctx.fillStyle = "#999";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.fillRect(0,0,canvas.width,canvas.height);
 }
 
-resizeCanvas();
-
-window.addEventListener("resize", resizeCanvas);
+resize();
+window.addEventListener("resize", resize);
 
 let drawing = false;
 
-function getPos(e) {
-  const rect = canvas.getBoundingClientRect();
+function getPos(e){
+  const r = canvas.getBoundingClientRect();
   return {
-    x: (e.touches ? e.touches[0].clientX : e.clientX) - rect.left,
-    y: (e.touches ? e.touches[0].clientY : e.clientY) - rect.top
+    x: (e.touches?e.touches[0].clientX:e.clientX)-r.left,
+    y: (e.touches?e.touches[0].clientY:e.clientY)-r.top
   };
 }
 
-function scratch(x, y) {
+function scratch(x,y){
   ctx.globalCompositeOperation = "destination-out";
   ctx.beginPath();
-  ctx.arc(x, y, 20, 0, Math.PI * 2);
+  ctx.arc(x,y,20,0,Math.PI*2);
   ctx.fill();
 }
 
-canvas.addEventListener("mousedown", () => drawing = true);
-canvas.addEventListener("mouseup", () => drawing = false);
-canvas.addEventListener("touchstart", () => drawing = true);
-canvas.addEventListener("touchend", () => drawing = false);
+canvas.addEventListener("mousedown",()=>drawing=true);
+canvas.addEventListener("mouseup",()=>drawing=false);
+canvas.addEventListener("touchstart",()=>drawing=true);
+canvas.addEventListener("touchend",()=>drawing=false);
 
-canvas.addEventListener("mousemove", (e) => {
-  if (!drawing) return;
-  const pos = getPos(e);
-  scratch(pos.x, pos.y);
+canvas.addEventListener("mousemove",(e)=>{
+  if(!drawing) return;
+  const p = getPos(e);
+  scratch(p.x,p.y);
 });
 
-canvas.addEventListener("touchmove", (e) => {
-  if (!drawing) return;
-  const pos = getPos(e);
-  scratch(pos.x, pos.y);
+canvas.addEventListener("touchmove",(e)=>{
+  if(!drawing) return;
+  const p = getPos(e);
+  scratch(p.x,p.y);
 });
 
-/* PREMIOS */
-function getReward() {
-  let r = Math.random() * 100;
-  let acc = 0;
+/* CANJEAR */
+document.getElementById("claimBtn").onclick = async ()=>{
 
-  for (let item of rewards) {
-    acc += item.chance;
-    if (r <= acc) return item.name;
+  currentReward = rewards[Math.floor(Math.random()*rewards.length)];
+
+  if(!user){
+    alert("Debes iniciar sesión");
+    return;
   }
-}
 
-/* LOGIN */
-async function register() {
-
-  const email = email.value;
-  const password = password.value;
-  const username = username.value;
-
-  const { data } = await client.auth.signUp({ email, password });
-
-  user = data.user;
-
-  await client.from("users").insert([{
-    id: user.id,
-    email,
-    username
+  await client.from("rewards").insert([{
+    user_id:user.id,
+    reward_name:currentReward
   }]);
-}
 
-async function login() {
+  document.getElementById("result").innerText =
+    "🎉 " + currentReward;
+};
 
-  const { data } = await client.auth.signInWithPassword({
-    email: email.value,
-    password: password.value
+/* MENU */
+document.getElementById("avatarBtn").onclick = ()=>{
+  document.getElementById("userMenu").classList.toggle("hidden");
+};
+
+/* AVATARES */
+avatars.forEach(a=>{
+  let s = document.createElement("span");
+  s.innerText = a;
+  s.onclick = async ()=>{
+
+    await client.from("profiles").upsert({
+      id:user.id,
+      avatar:a
+    });
+
+    alert("Avatar cambiado");
+  };
+
+  document.getElementById("avatarList").appendChild(s);
+});
+
+/* LOGIN SIMPLE */
+async function login(email,password){
+  const {data}=await client.auth.signInWithPassword({
+    email,password
   });
 
-  user = data.user;
+  user=data.user;
 }
 
-/* BOTONES */
-registerBtn.onclick = register;
-loginBtn.onclick = login;
+/* REGISTER */
+async function register(email,password,username){
+  const {data}=await client.auth.signUp({
+    email,password
+  });
 
-/* RECLAMAR (opcional si quieres después) */
+  user=data.user;
+
+  await client.from("users").insert({
+    id:user.id,
+    email,
+    username
+  });
+}
