@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>LuckyScratch</title>
-  <link rel="stylesheet" href="style.css"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>LuckyScratch</title>
+<link rel="stylesheet" href="style.css"/>
 </head>
 
 <body>
@@ -15,15 +15,14 @@
   <h1>🎁 LuckyScratch</h1>
 </header>
 
-<!-- SCRATCH AREA -->
+<!-- MAIN -->
 <main class="container">
 
+  <!-- SCRATCH -->
   <section class="scratch-card">
 
-    <!-- LO QUE HAY DEBAJO DEL RASCA -->
-    <div id="prizeReveal" class="prize-reveal">🎁 Rasca para descubrir</div>
+    <div id="prizeReveal" class="prize-reveal">🎁 ???</div>
 
-    <!-- CANVAS SCRATCH -->
     <canvas id="scratchCanvas"></canvas>
 
   </section>
@@ -38,9 +37,10 @@
 
 </main>
 
-<!-- ================= PROFILE PANEL ================= -->
+<!-- OVERLAY -->
 <div id="overlay" class="overlay hidden"></div>
 
+<!-- SIDE MENU -->
 <aside id="sideMenu" class="side-menu hidden">
 
   <div class="profile-header">
@@ -57,44 +57,19 @@
 
 </aside>
 
-<!-- ================= MODAL LOGIN ================= -->
+<!-- LOGIN MODAL -->
 <div id="authModal" class="modal hidden">
-
   <div class="modal-box">
 
     <h2>Acceso</h2>
 
     <input id="emailInput" type="email" placeholder="Email"/>
     <input id="passInput" type="password" placeholder="Contraseña"/>
-
-    <input id="userInput" type="text" placeholder="Nombre usuario (registro)"/>
+    <input id="userInput" type="text" placeholder="Nombre usuario"/>
 
     <button id="loginBtn">Iniciar sesión</button>
     <button id="registerBtn">Registrarse</button>
 
-  </div>
-
-</div>
-
-<!-- ================= MODAL MIS PREMIOS ================= -->
-<div id="rewardsModal" class="modal hidden">
-  <div class="modal-box">
-    <h2>📦 Mis premios</h2>
-    <div id="myRewards"></div>
-    <button class="closeModal">Volver</button>
-  </div>
-</div>
-
-<!-- ================= MODAL AVATARES ================= -->
-<div id="avatarModal" class="modal hidden">
-  <div class="modal-box">
-    <h2>🖼 Elige avatar</h2>
-
-    <div id="avatarGrid">
-      <!-- JS mete los 10 avatares -->
-    </div>
-
-    <button class="closeModal">Volver</button>
   </div>
 </div>
 
@@ -102,8 +77,8 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
-  const SUPABASE_URL = "https://ybsrkghhgurjgrfukgox.supabase.co";
-  const SUPABASE_KEY = "sb_publishable_gxjNTA6NmdNdyt46l11XBg_3NlCFRrX";
+const SUPABASE_URL = "https://ybsrkghhgurjgrfukgox.supabase.co";
+const SUPABASE_KEY = "sb_publishable_gxjNTA6NmdNdyt46l11XBg_3NlCFRrX";
 </script>
 
 <script src="app.js"></script>
