@@ -9,57 +9,57 @@
 
 <body>
 
+<!-- TOP BAR -->
+<div class="topbar">
+
+<div id="avatarBtn">👤</div>
+
+<div id="userMenu" class="hidden">
+<p id="menuName"></p>
+<p id="menuEmail"></p>
+
+<hr>
+
+<button id="openRewards">📦 Mis premios</button>
+<button id="logoutBtn">🚪 Cerrar sesión</button>
+
+<hr>
+
+<p>Avatar:</p>
+<div id="avatarList"></div>
+
+</div>
+
+</div>
+
+<!-- APP -->
 <div class="app">
 
 <header>
 <h1>🎁 LuckyScratch</h1>
-<p>Intentos: <span id="tries">3</span></p>
 </header>
 
-<main>
-
-<!-- SCRATCH REAL -->
-<section class="scratch-box">
-
+<!-- SCRATCH -->
 <div class="scratch-wrapper">
-  <canvas id="scratchCanvas"></canvas>
+<canvas id="scratchCanvas"></canvas>
+<div id="hiddenPrize">🎁 ???</div>
+</div>
 
-  <div id="hiddenPrize">
-    🎁 RASCA PARA DESCUBRIR
-  </div>
+<button id="claimBtn">CANJEAR PREMIO</button>
+
+<!-- PREMIOS -->
+<div class="rewards-list">
+<p>💩 Piedra 💎 Moneda 🍀 Suerte 💎 Cristal 🧠 IA 👑 Corona 🌌 LEGENDARIO</p>
 </div>
 
 <div id="result"></div>
 
-</section>
-
-<!-- PANEL -->
-<aside class="panel">
-
-<h3>🎁 Probabilidades</h3>
-<ul>
-<li>💩 Piedra — 35%</li>
-<li>🪙 Moneda — 25%</li>
-<li>🍀 Suerte — 15%</li>
-<li>💎 Cristal — 12%</li>
-<li>🧠 IA — 8%</li>
-<li>👑 Corona — 4%</li>
-<li>🌌 LEGENDARIO — 1%</li>
-</ul>
-
-</aside>
-
-</main>
-
-<!-- LOGIN -->
-<div id="authBox">
-
-<input id="username" placeholder="Nombre de usuario">
-<input id="email" type="email" placeholder="Email">
-<input id="password" type="password" placeholder="Contraseña">
-
-<button id="registerBtn">Registrarse</button>
-<button id="loginBtn">Iniciar sesión</button>
+<!-- MODAL PREMIOS -->
+<div id="rewardsModal" class="hidden">
+<h3>Mis premios</h3>
+<div id="rewardsList"></div>
+<button id="closeRewards">Cerrar</button>
+</div>
 
 </div>
 
