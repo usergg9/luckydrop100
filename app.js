@@ -1,18 +1,17 @@
-const client = supabase.createClient(https://ybsrkghhgurjgrfukgox.supabase.co/rest/v1/
-,sb_publishable_gxjNTA6NmdNdyt46l11XBg_3NlCFRrX);
-
+const SUPABASE_URL = "https://ybsrkghhgurjgrfukgox.supabase.co";
+const SUPABASE_KEY = "sb_publishable_gxjNTA6NmdNdyt46l11XBg_3NlCFRrX";
 let user = null;
 let currentReward = null;
 
-/* 🎁 PREMIOS CREATIVOS */
+/* 🎁 PREMIOS */
 const rewards = [
-  { name: "💩 Piedra del Desierto (sin valor)", chance: 35 },
-  { name: "🪙 Moneda Antigua Misteriosa", chance: 25 },
-  { name: "🍀 Suerte Instantánea (+1 karma)", chance: 15 },
-  { name: "💎 Cristal del Sueño Brillante", chance: 12 },
-  { name: "🧠 Chip de Inteligencia Aleatoria", chance: 8 },
-  { name: "👑 Corona del Usuario Elegido", chance: 4 },
-  { name: "🌌 Fragmento del Universo (LEGENDARIO)", chance: 1 }
+  { name: "💩 Piedra", chance: 35 },
+  { name: "🪙 Moneda", chance: 25 },
+  { name: "🍀 Suerte", chance: 15 },
+  { name: "💎 Cristal", chance: 12 },
+  { name: "🧠 Chip IA", chance: 8 },
+  { name: "👑 Corona", chance: 4 },
+  { name: "🌌 LEGENDARIO", chance: 1 }
 ];
 
 /* LOGIN */
@@ -39,17 +38,17 @@ function getReward() {
   }
 }
 
-/* BOTÓN RASCAR */
+/* UI */
 document.getElementById("scratchBtn").onclick = () => {
   currentReward = getReward();
   document.getElementById("result").innerText =
-    "🎉 Has obtenido: " + currentReward;
+    "🎉 " + currentReward;
 };
 
-/* RECLAMAR (OBLIGA LOGIN) */
+/* RECLAMAR */
 document.getElementById("claimBtn").onclick = async () => {
   if (!user) {
-    alert("Debes registrarte o iniciar sesión");
+    alert("Debes iniciar sesión");
     return;
   }
 
@@ -60,10 +59,10 @@ document.getElementById("claimBtn").onclick = async () => {
     }
   ]);
 
-  alert("Premio guardado!");
+  alert("Premio guardado");
 };
 
-/* BOTONES LOGIN */
+/* REGISTER */
 document.getElementById("registerBtn").onclick = async () => {
   const email = document.getElementById("email").value;
   const pass = document.getElementById("password").value;
@@ -71,9 +70,10 @@ document.getElementById("registerBtn").onclick = async () => {
   const { error } = await register(email, pass);
 
   document.getElementById("result").innerText =
-    error ? error.message : "✅ Usuario creado";
+    error ? error.message : "Usuario creado";
 };
 
+/* LOGIN */
 document.getElementById("loginBtn").onclick = async () => {
   const email = document.getElementById("email").value;
   const pass = document.getElementById("password").value;
@@ -81,5 +81,5 @@ document.getElementById("loginBtn").onclick = async () => {
   const { error } = await login(email, pass);
 
   document.getElementById("result").innerText =
-    error ? error.message : "🔥 Sesión iniciada";
+    error ? error.message : "Sesión iniciada";
 };
