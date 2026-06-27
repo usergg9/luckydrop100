@@ -11,55 +11,38 @@
 
 <!-- TOP BAR -->
 <div class="topbar">
-
-<div id="avatarBtn">👤</div>
-
-<div id="userMenu" class="hidden">
-<p id="menuName"></p>
-<p id="menuEmail"></p>
-
-<hr>
-
-<button id="openRewards">📦 Mis premios</button>
-<button id="logoutBtn">🚪 Cerrar sesión</button>
-
-<hr>
-
-<p>Avatar:</p>
-<div id="avatarList"></div>
-
+  <button id="profileBtn">👤</button>
 </div>
+
+<!-- SIDEBAR PROFILE -->
+<div id="sidePanel" class="hidden">
+
+  <div class="profileHeader">
+    <div id="avatar">👤</div>
+    <div>
+      <p id="pName"></p>
+      <p id="pEmail"></p>
+    </div>
+  </div>
+
+  <button id="openMyRewards">📦 Mis premios</button>
+  <button id="logoutBtn">🚪 Cerrar sesión</button>
 
 </div>
 
 <!-- APP -->
 <div class="app">
 
-<header>
 <h1>🎁 LuckyScratch</h1>
-</header>
 
-<!-- SCRATCH -->
-<div class="scratch-wrapper">
-<canvas id="scratchCanvas"></canvas>
-<div id="hiddenPrize">🎁 ???</div>
+<div class="scratch-container">
+  <canvas id="scratchCanvas"></canvas>
+  <div id="hiddenPrize"></div>
 </div>
 
 <button id="claimBtn">CANJEAR PREMIO</button>
 
-<!-- PREMIOS -->
-<div class="rewards-list">
-<p>💩 Piedra 💎 Moneda 🍀 Suerte 💎 Cristal 🧠 IA 👑 Corona 🌌 LEGENDARIO</p>
-</div>
-
 <div id="result"></div>
-
-<!-- MODAL PREMIOS -->
-<div id="rewardsModal" class="hidden">
-<h3>Mis premios</h3>
-<div id="rewardsList"></div>
-<button id="closeRewards">Cerrar</button>
-</div>
 
 </div>
 
