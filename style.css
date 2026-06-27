@@ -1,52 +1,39 @@
-* {
+body{
   margin:0;
-  padding:0;
-  box-sizing:border-box;
   font-family:Arial;
-}
-
-body {
   background:#0b1220;
   color:white;
 }
 
-.topbar {
+.topbar{
   display:flex;
-  align-items:center;
   gap:10px;
   padding:10px;
   background:#111827;
-  position:fixed;
-  width:100%;
-  top:0;
 }
 
-.container {
-  padding-top:70px;
+.container{
   text-align:center;
+  padding:20px;
 }
 
-/* SCRATCH */
-.scratch-card {
+.scratch-card{
   width:90%;
-  max-width:400px;
+  max-width:420px;
   height:260px;
-  margin:20px auto;
+  margin:auto;
   position:relative;
-  border-radius:15px;
-  overflow:hidden;
   background:#1f2937;
+  border-radius:12px;
+  overflow:hidden;
 }
 
-#scratchCanvas {
+#scratchCanvas{
   position:absolute;
   inset:0;
-  width:100%;
-  height:100%;
-  touch-action:none;
 }
 
-#prizeReveal {
+#prizeReveal{
   position:absolute;
   inset:0;
   display:flex;
@@ -55,49 +42,33 @@ body {
   font-size:22px;
 }
 
-/* BUTTON */
-button {
-  padding:10px 15px;
-  border:none;
-  border-radius:8px;
-  background:#2563eb;
-  color:white;
-}
-
-/* OVERLAY */
-.overlay {
+.overlay{
   position:fixed;
   inset:0;
   background:rgba(0,0,0,0.5);
 }
 
-/* MENU */
-.side-menu {
+.side-menu{
   position:fixed;
   left:0;
   top:0;
   width:260px;
   height:100%;
   background:#111827;
-  padding:15px;
+  padding:10px;
 }
 
-/* MODAL */
-.modal {
+.auth{
   position:fixed;
-  inset:0;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  background:rgba(0,0,0,0.6);
-}
-
-.modal-box {
+  bottom:0;
+  width:100%;
   background:#111827;
-  padding:20px;
-  border-radius:10px;
+  padding:10px;
 }
 
-.hidden {
-  display:none;
+.hidden{display:none;}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
 }
