@@ -18,67 +18,44 @@
 
   <div class="scratch-card">
     <div id="prizeReveal">🎁 ???</div>
-    <canvas id="scratchCanvas" willreadfrequently="true"></canvas>
+    <canvas id="scratchCanvas"></canvas>
   </div>
 
   <button id="claimBtn">CANJEAR PREMIO</button>
 
 </main>
 
-<!-- OVERLAY -->
+<!-- MENU -->
 <div id="overlay" class="overlay hidden"></div>
 
-<!-- MENU -->
 <div id="sideMenu" class="side-menu hidden">
-
-  <div id="menuMain">
-    <h3>Perfil</h3>
-
-    <button id="btnAvatars">🖼 Avatares</button>
-    <button id="btnRewards">📦 Mis premios</button>
-    <button id="btnLogout">🚪 Cerrar sesión</button>
-  </div>
-
-  <div id="menuAvatars" class="hidden">
-    <button id="backMenu1">← Volver</button>
-    <div>
-      <span>👤</span><span>😎</span><span>🤖</span>
-      <span>🦊</span><span>🐼</span><span>🐸</span>
-      <span>🦁</span><span>👻</span><span>🐧</span><span>🐱</span>
-    </div>
-  </div>
-
-  <div id="menuRewards" class="hidden">
-    <button id="backMenu2">← Volver</button>
-    <div id="myRewards"></div>
-  </div>
-
+  <button id="btnAvatars">Avatares</button>
+  <button id="btnRewards">Mis premios</button>
+  <button id="btnLogout">Cerrar sesión</button>
 </div>
 
 <!-- AUTH -->
 <footer class="auth">
 
-  <div>
-    <button id="showLogin">Login</button>
-    <button id="showRegister">Registro</button>
-  </div>
+  <button id="showLogin">Login</button>
+  <button id="showRegister">Registro</button>
 
   <div id="loginBox">
-    <input id="loginEmail" placeholder="Email">
-    <input id="loginPass" type="password" placeholder="Password">
+    <input id="loginEmail">
+    <input id="loginPass" type="password">
     <button id="loginBtn">Entrar</button>
   </div>
 
   <div id="registerBox" class="hidden">
-    <input id="regUser" placeholder="Usuario">
-    <input id="regEmail" placeholder="Email">
+    <input id="regUser">
+    <input id="regEmail">
     <input id="regPass" type="password">
     <button id="registerBtn">Crear</button>
   </div>
 
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/supabase.min.js"></script>
 
 <script>
 const SUPABASE_URL="https://ybsrkghhgurjgrfukgox.supabase.co";
