@@ -1,4 +1,7 @@
+const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
 let user = null;
+let currentReward = null;let user = null;
 let currentReward = null;
 
 /* 🎁 PREMIOS */
