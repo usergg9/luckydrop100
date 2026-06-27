@@ -1,54 +1,109 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LuckyScratch</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LuckyScratch</title>
+  <link rel="stylesheet" href="style.css"/>
 </head>
 
 <body>
 
 <!-- TOP BAR -->
-<div class="topbar">
-  <button id="profileBtn">👤</button>
-</div>
+<header class="topbar">
+  <button id="profileBtn" class="icon-btn">👤</button>
+  <h1>🎁 LuckyScratch</h1>
+</header>
 
-<!-- SIDE MENU -->
-<div id="sideMenu" class="hidden">
-  <div class="sideHeader">
+<!-- SCRATCH AREA -->
+<main class="container">
+
+  <section class="scratch-card">
+
+    <!-- LO QUE HAY DEBAJO DEL RASCA -->
+    <div id="prizeReveal" class="prize-reveal">🎁 Rasca para descubrir</div>
+
+    <!-- CANVAS SCRATCH -->
+    <canvas id="scratchCanvas"></canvas>
+
+  </section>
+
+  <button id="claimBtn" class="claim-btn">CANJEAR PREMIO</button>
+
+  <!-- RANKING -->
+  <section class="ranking">
+    <h2>🏆 Premios raros hoy</h2>
+    <div id="rankingList">Cargando...</div>
+  </section>
+
+</main>
+
+<!-- ================= PROFILE PANEL ================= -->
+<div id="overlay" class="overlay hidden"></div>
+
+<aside id="sideMenu" class="side-menu hidden">
+
+  <div class="profile-header">
     <div id="avatar">👤</div>
     <div>
-      <p id="usernameText"></p>
-      <p id="emailText"></p>
+      <p id="username">Usuario</p>
+      <p id="email">correo@ejemplo.com</p>
     </div>
   </div>
 
-  <button id="openHistory">📦 Mis premios</button>
+  <button id="openRewards">📦 Mis premios</button>
+  <button id="openAvatar">🖼 Cambiar avatar</button>
   <button id="logoutBtn">🚪 Cerrar sesión</button>
+
+</aside>
+
+<!-- ================= MODAL LOGIN ================= -->
+<div id="authModal" class="modal hidden">
+
+  <div class="modal-box">
+
+    <h2>Acceso</h2>
+
+    <input id="emailInput" type="email" placeholder="Email"/>
+    <input id="passInput" type="password" placeholder="Contraseña"/>
+
+    <input id="userInput" type="text" placeholder="Nombre usuario (registro)"/>
+
+    <button id="loginBtn">Iniciar sesión</button>
+    <button id="registerBtn">Registrarse</button>
+
+  </div>
+
 </div>
 
-<!-- APP -->
-<div class="app">
-
-<h1>🎁 LuckyScratch</h1>
-
-<div class="scratch-box">
-  <div id="prizeText">🎁 Rasca para descubrir</div>
-  <canvas id="scratchCanvas"></canvas>
+<!-- ================= MODAL MIS PREMIOS ================= -->
+<div id="rewardsModal" class="modal hidden">
+  <div class="modal-box">
+    <h2>📦 Mis premios</h2>
+    <div id="myRewards"></div>
+    <button class="closeModal">Volver</button>
+  </div>
 </div>
 
-<button id="claimBtn">CANJEAR PREMIO</button>
+<!-- ================= MODAL AVATARES ================= -->
+<div id="avatarModal" class="modal hidden">
+  <div class="modal-box">
+    <h2>🖼 Elige avatar</h2>
 
-<p id="result"></p>
+    <div id="avatarGrid">
+      <!-- JS mete los 10 avatares -->
+    </div>
 
+    <button class="closeModal">Volver</button>
+  </div>
 </div>
 
+<!-- SUPABASE -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
-const SUPABASE_URL = "https://ybsrkghhgurjgrfukgox.supabase.co";
-const SUPABASE_KEY = "sb_publishable_gxjNTA6NmdNdyt46l11XBg_3NlCFRrX";
+  const SUPABASE_URL = "https://ybsrkghhgurjgrfukgox.supabase.co";
+  const SUPABASE_KEY = "sb_publishable_gxjNTA6NmdNdyt46l11XBg_3NlCFRrX";
 </script>
 
 <script src="app.js"></script>
