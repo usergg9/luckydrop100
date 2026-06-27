@@ -1,10 +1,13 @@
-const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+// Crear cliente de Supabase
+const client = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
 
 let user = null;
-let currentReward = null;let user = null;
 let currentReward = null;
 
-/* 🎁 PREMIOS */
+// PREMIOS
 const rewards = [
   { name: "💩 Piedra", chance: 35 },
   { name: "🪙 Moneda", chance: 25 },
@@ -15,72 +18,114 @@ const rewards = [
   { name: "🌌 LEGENDARIO", chance: 1 }
 ];
 
-/* LOGIN */
+// REGISTRO
 async function register(email, password) {
-  return await client.auth.signUp({ email, password });
-}
-
-async function login(email, password) {
-  const { data } = await client.auth.signInWithPassword({
+  const { data, error } = await client.auth.signUp({
     email,
     password
   });
-  user = data.user;
-}
 
-/* RASCA */
-function getReward() {
-  let r = Math.random() * 100;
-  let acc = 0;
-
-  for (let item of rewards) {
-    acc += item.chance;
-    if (r <= acc) return item.name;
-  }
-}
-
-/* UI */
-document.getElementById("scratchBtn").onclick = () => {
-  currentReward = getReward();
-  document.getElementById("result").innerText =
-    "🎉 " + currentReward;
-};
-
-/* RECLAMAR */
-document.getElementById("claimBtn").onclick = async () => {
-  if (!user) {
-    alert("Debes iniciar sesión");
+  if (error) {
+    alert(error.message);
     return;
   }
 
-  await client.from("rewards").insert([
-    {
-      user_id: user.id,
-      reward_name: currentReward
+  alert("Usuario registrado");
+}
+
+// LOGIN
+async function login(email, password) {
+  const { data, error } = await client.auth.signInWithPassword({
+    email,
+    password
+  });
+
+  if (error) {
+    alert(error.message);
+    return;
+  }
+
+  user = data.user;
+
+  alert("Sesión iniciada");
+}
+
+// Obtener premio
+function getReward() {
+  let r = Math.random() * 100;
+  let total = 0;
+
+  for (const reward of rewards) {
+    total += reward.chance;
+
+    if (r <= total) {
+      return reward.name;
     }
-  ]);
+  }
+}
 
-  alert("Premio guardado");
+// Rascar
+document.getElementById("scratchBtn").onclick = () => {
+
+  currentReward = getReward();
+
+  document.getElementById("result").innerHTML =
+    "🎉 Has conseguido:<br><br><b>" + currentReward + "</b>";
+
 };
 
-/* REGISTER */
+// Reclamar
+document.getElementById("claimBtn").onclick = async () => {
+
+  if (!currentReward) {
+    alert("Primero rasca.");
+    return;
+  }
+
+  if (!user) {
+    alert("Debes iniciar sesión para reclamar.");
+    return;
+  }
+
+  const { error } = await client
+    .from("rewards")
+    .insert([
+      {
+        user_id: user.id,
+        reward_name: currentReward
+      }
+    ]);
+
+  if (error) {
+    alert(error.message);
+    return;
+  }
+
+  alert("Premio guardado correctamente.");
+};
+
+// BOTÓN REGISTRO
 document.getElementById("registerBtn").onclick = async () => {
-  const email = document.getElementById("email").value;
-  const pass = document.getElementById("password").value;
 
-  const { error } = await register(email, pass);
+  const email =
+    document.getElementById("email").value;
 
-  document.getElementById("result").innerText =
-    error ? error.message : "Usuario creado";
+  const password =
+    document.getElementById("password").value;
+
+  await register(email, password);
+
 };
 
-/* LOGIN */
+// BOTÓN LOGIN
 document.getElementById("loginBtn").onclick = async () => {
-  const email = document.getElementById("email").value;
-  const pass = document.getElementById("password").value;
 
-  const { error } = await login(email, pass);
+  const email =
+    document.getElementById("email").value;
 
-  document.getElementById("result").innerText =
-    error ? error.message : "Sesión iniciada";
+  const password =
+    document.getElementById("password").value;
+
+  await login(email, password);
+
 };
