@@ -10,46 +10,32 @@ body {
   color:white;
 }
 
-/* TOPBAR */
 .topbar {
-  position:fixed;
-  top:0;
-  width:100%;
-  height:60px;
-  background:rgba(15,23,42,0.85);
   display:flex;
   align-items:center;
-  padding:0 15px;
   gap:10px;
-  z-index:10;
-}
-
-.icon-btn {
-  border:none;
-  background:#1f2937;
-  color:white;
   padding:10px;
-  border-radius:50%;
-  cursor:pointer;
+  background:#111827;
+  position:fixed;
+  width:100%;
+  top:0;
 }
 
-/* CONTAINER */
 .container {
-  padding-top:80px;
-  max-width:500px;
-  margin:auto;
+  padding-top:70px;
   text-align:center;
 }
 
 /* SCRATCH */
 .scratch-card {
-  position:relative;
-  width:100%;
+  width:90%;
+  max-width:400px;
   height:260px;
   margin:20px auto;
-  border-radius:16px;
+  position:relative;
+  border-radius:15px;
   overflow:hidden;
-  background:linear-gradient(135deg,#1f2937,#111827);
+  background:#1f2937;
 }
 
 #scratchCanvas {
@@ -57,37 +43,25 @@ body {
   inset:0;
   width:100%;
   height:100%;
-  z-index:2;
   touch-action:none;
 }
 
-.prize-reveal {
+#prizeReveal {
   position:absolute;
   inset:0;
   display:flex;
   justify-content:center;
   align-items:center;
   font-size:22px;
-  z-index:1;
 }
 
 /* BUTTON */
-.claim-btn {
-  margin-top:15px;
-  padding:12px 18px;
+button {
+  padding:10px 15px;
   border:none;
-  border-radius:10px;
+  border-radius:8px;
   background:#2563eb;
   color:white;
-  font-weight:bold;
-}
-
-/* RANKING */
-.ranking {
-  margin-top:25px;
-  padding:15px;
-  background:rgba(255,255,255,0.05);
-  border-radius:12px;
 }
 
 /* OVERLAY */
@@ -95,29 +69,17 @@ body {
   position:fixed;
   inset:0;
   background:rgba(0,0,0,0.5);
-  z-index:19;
 }
 
-/* SIDE MENU */
+/* MENU */
 .side-menu {
   position:fixed;
-  top:0;
   left:0;
-  width:25%;
-  min-width:260px;
+  top:0;
+  width:260px;
   height:100%;
-  background:rgba(17,24,39,0.95);
-  z-index:20;
+  background:#111827;
   padding:15px;
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-}
-
-.profile-header {
-  display:flex;
-  gap:10px;
-  align-items:center;
 }
 
 /* MODAL */
@@ -128,27 +90,14 @@ body {
   justify-content:center;
   align-items:center;
   background:rgba(0,0,0,0.6);
-  z-index:30;
 }
 
 .modal-box {
   background:#111827;
   padding:20px;
-  border-radius:12px;
-  width:90%;
-  max-width:350px;
-}
-
-input {
-  width:100%;
-  padding:10px;
-  margin:5px 0;
-  border:none;
-  border-radius:8px;
-  background:#1f2937;
-  color:white;
+  border-radius:10px;
 }
 
 .hidden {
-  display:none !important;
+  display:none;
 }
