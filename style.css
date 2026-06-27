@@ -39,7 +39,6 @@ body{
   display:flex;
   justify-content:center;
   align-items:center;
-  font-size:22px;
 }
 
 .overlay{
@@ -67,8 +66,3 @@ body{
 }
 
 .hidden{display:none;}
-
-.grid{
-  display:grid;
-  grid-template-columns:repeat(5,1fr);
-}
