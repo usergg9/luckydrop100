@@ -1,0 +1,86 @@
+body {
+  margin: 0;
+  font-family: Arial;
+  background: #0b1020;
+  color: white;
+}
+
+.app {
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+}
+
+header {
+  text-align: center;
+}
+
+main {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.scratch-box {
+  flex: 2;
+  background: #121a33;
+  padding: 20px;
+  border-radius: 15px;
+  text-align: center;
+}
+
+#scratchArea {
+  font-size: 40px;
+  padding: 90px;
+  background: #1d2a55;
+  border-radius: 15px;
+  margin-bottom: 10px;
+}
+
+button {
+  padding: 12px 18px;
+  margin: 5px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+#scratchBtn {
+  background: gold;
+}
+
+#claimBtn {
+  background: #4ade80;
+}
+
+.panel {
+  flex: 1;
+  background: #121a33;
+  padding: 20px;
+  border-radius: 15px;
+}
+
+/* LOGIN */
+#authBox {
+  margin-top: 20px;
+  text-align: center;
+}
+
+input {
+  padding: 10px;
+  margin: 5px;
+  border-radius: 8px;
+  border: none;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  main {
+    flex-direction: column;
+  }
+
+  #scratchArea {
+    font-size: 30px;
+    padding: 60px;
+  }
+}
