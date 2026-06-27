@@ -6,49 +6,44 @@ const client = window.supabase.createClient(
 let user = null;
 let currentReward = null;
 
-/* AVATARES */
-const avatars = ["👽","🤖","🐱","🐶","🦊","🐼","🐸","🦁","🐵","🐷"];
-
-/* PREMIOS */
+/* PREMIOS con probabilidad real */
 const rewards = [
-  "💩 Piedra",
-  "🪙 Moneda",
-  "🍀 Suerte",
-  "💎 Cristal",
-  "🧠 IA",
-  "👑 Corona",
-  "🌌 LEGENDARIO"
+  { name:"💩 Piedra", chance:35 },
+  { name:"🪙 Moneda", chance:25 },
+  { name:"🍀 Suerte", chance:15 },
+  { name:"💎 Cristal", chance:12 },
+  { name:"🧠 IA", chance:8 },
+  { name:"👑 Corona", chance:4 },
+  { name:"🌌 LEGENDARIO", chance:1 }
 ];
 
-/* SCRATCH */
+/* SCRATCH REAL */
 const canvas = document.getElementById("scratchCanvas");
 const ctx = canvas.getContext("2d");
 
-function resize() {
+function resize(){
   canvas.width = canvas.offsetWidth;
   canvas.height = canvas.offsetHeight;
 
-  ctx.fillStyle = "#999";
+  ctx.fillStyle="#777";
   ctx.fillRect(0,0,canvas.width,canvas.height);
 }
-
 resize();
-window.addEventListener("resize", resize);
 
-let drawing = false;
+let drawing=false;
 
-function getPos(e){
+function pos(e){
   const r = canvas.getBoundingClientRect();
   return {
-    x: (e.touches?e.touches[0].clientX:e.clientX)-r.left,
-    y: (e.touches?e.touches[0].clientY:e.clientY)-r.top
+    x:(e.touches?e.touches[0].clientX:e.clientX)-r.left,
+    y:(e.touches?e.touches[0].clientY:e.clientY)-r.top
   };
 }
 
 function scratch(x,y){
-  ctx.globalCompositeOperation = "destination-out";
+  ctx.globalCompositeOperation="destination-out";
   ctx.beginPath();
-  ctx.arc(x,y,20,0,Math.PI*2);
+  ctx.arc(x,y,25,0,Math.PI*2);
   ctx.fill();
 }
 
@@ -59,20 +54,31 @@ canvas.addEventListener("touchend",()=>drawing=false);
 
 canvas.addEventListener("mousemove",(e)=>{
   if(!drawing) return;
-  const p = getPos(e);
+  const p=pos(e);
   scratch(p.x,p.y);
 });
 
 canvas.addEventListener("touchmove",(e)=>{
   if(!drawing) return;
-  const p = getPos(e);
+  const p=pos(e);
   scratch(p.x,p.y);
 });
 
-/* CANJEAR */
-document.getElementById("claimBtn").onclick = async ()=>{
+/* PREMIO REAL (respeta probabilidad) */
+function getReward(){
+  let r=Math.random()*100;
+  let acc=0;
 
-  currentReward = rewards[Math.floor(Math.random()*rewards.length)];
+  for(let i of rewards){
+    acc+=i.chance;
+    if(r<=acc) return i.name;
+  }
+}
+
+/* CANJEAR */
+document.getElementById("claimBtn").onclick=async()=>{
+
+  currentReward=getReward();
 
   if(!user){
     alert("Debes iniciar sesión");
@@ -84,31 +90,14 @@ document.getElementById("claimBtn").onclick = async ()=>{
     reward_name:currentReward
   }]);
 
-  document.getElementById("result").innerText =
-    "🎉 " + currentReward;
+  document.getElementById("hiddenPrize").innerText=currentReward;
+  document.getElementById("result").innerText="🎉 Premio obtenido";
 };
 
-/* MENU */
-document.getElementById("avatarBtn").onclick = ()=>{
-  document.getElementById("userMenu").classList.toggle("hidden");
+/* PERFIL PANEL */
+document.getElementById("profileBtn").onclick=()=>{
+  document.getElementById("sidePanel").classList.toggle("hidden");
 };
-
-/* AVATARES */
-avatars.forEach(a=>{
-  let s = document.createElement("span");
-  s.innerText = a;
-  s.onclick = async ()=>{
-
-    await client.from("profiles").upsert({
-      id:user.id,
-      avatar:a
-    });
-
-    alert("Avatar cambiado");
-  };
-
-  document.getElementById("avatarList").appendChild(s);
-});
 
 /* LOGIN SIMPLE */
 async function login(email,password){
@@ -119,7 +108,7 @@ async function login(email,password){
   user=data.user;
 }
 
-/* REGISTER */
+/* REGISTER SIMPLE */
 async function register(email,password,username){
   const {data}=await client.auth.signUp({
     email,password
@@ -127,9 +116,9 @@ async function register(email,password,username){
 
   user=data.user;
 
-  await client.from("users").insert({
+  await client.from("users").insert([{
     id:user.id,
     email,
     username
-  });
+  }]);
 }
