@@ -18,7 +18,7 @@
 
   <div class="scratch-card">
     <div id="prizeReveal">🎁 ???</div>
-    <canvas id="scratchCanvas"></canvas>
+    <canvas id="scratchCanvas" willreadfrequently="true"></canvas>
   </div>
 
   <button id="claimBtn">CANJEAR PREMIO</button>
@@ -28,38 +28,28 @@
 <!-- OVERLAY -->
 <div id="overlay" class="overlay hidden"></div>
 
-<!-- PROFILE -->
+<!-- MENU -->
 <div id="sideMenu" class="side-menu hidden">
 
   <div id="menuMain">
-
     <h3>Perfil</h3>
 
-    <button onclick="openAvatars()">🖼 Avatares</button>
-    <button onclick="openRewards()">📦 Mis premios</button>
-    <button onclick="logout()">🚪 Cerrar sesión</button>
-
+    <button id="btnAvatars">🖼 Avatares</button>
+    <button id="btnRewards">📦 Mis premios</button>
+    <button id="btnLogout">🚪 Cerrar sesión</button>
   </div>
 
   <div id="menuAvatars" class="hidden">
-    <button onclick="backMenu()">← Volver</button>
-
-    <div class="grid">
-      <span onclick="setAvatar('👤')">👤</span>
-      <span onclick="setAvatar('😎')">😎</span>
-      <span onclick="setAvatar('🤖')">🤖</span>
-      <span onclick="setAvatar('🦊')">🦊</span>
-      <span onclick="setAvatar('🐼')">🐼</span>
-      <span onclick="setAvatar('🐸')">🐸</span>
-      <span onclick="setAvatar('🦁')">🦁</span>
-      <span onclick="setAvatar('👻')">👻</span>
-      <span onclick="setAvatar('🐧')">🐧</span>
-      <span onclick="setAvatar('🐱')">🐱</span>
+    <button id="backMenu1">← Volver</button>
+    <div>
+      <span>👤</span><span>😎</span><span>🤖</span>
+      <span>🦊</span><span>🐼</span><span>🐸</span>
+      <span>🦁</span><span>👻</span><span>🐧</span><span>🐱</span>
     </div>
   </div>
 
   <div id="menuRewards" class="hidden">
-    <button onclick="backMenu()">← Volver</button>
+    <button id="backMenu2">← Volver</button>
     <div id="myRewards"></div>
   </div>
 
@@ -69,21 +59,21 @@
 <footer class="auth">
 
   <div>
-    <button onclick="showLogin()">Login</button>
-    <button onclick="showRegister()">Registro</button>
+    <button id="showLogin">Login</button>
+    <button id="showRegister">Registro</button>
   </div>
 
   <div id="loginBox">
     <input id="loginEmail" placeholder="Email">
     <input id="loginPass" type="password" placeholder="Password">
-    <button onclick="login()">Entrar</button>
+    <button id="loginBtn">Entrar</button>
   </div>
 
   <div id="registerBox" class="hidden">
     <input id="regUser" placeholder="Usuario">
     <input id="regEmail" placeholder="Email">
     <input id="regPass" type="password">
-    <button onclick="register()">Crear</button>
+    <button id="registerBtn">Crear</button>
   </div>
 
 </footer>
