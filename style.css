@@ -10,6 +10,7 @@ body{
   gap:10px;
   padding:10px;
   background:#111827;
+  align-items:center;
 }
 
 .container{
@@ -17,6 +18,7 @@ body{
   padding:20px;
 }
 
+/* SCRATCH */
 .scratch-card{
   width:90%;
   max-width:420px;
@@ -39,8 +41,10 @@ body{
   display:flex;
   justify-content:center;
   align-items:center;
+  font-size:22px;
 }
 
+/* MENU */
 .overlay{
   position:fixed;
   inset:0;
@@ -51,18 +55,33 @@ body{
   position:fixed;
   left:0;
   top:0;
-  width:220px;
+  width:260px;
   height:100%;
   background:#111827;
   padding:10px;
+  overflow:auto;
 }
 
-.hidden{display:none;}
+.hidden{
+  display:none;
+}
 
+.avatars span{
+  font-size:24px;
+  margin:5px;
+  cursor:pointer;
+}
+
+/* AUTH */
 .auth{
   position:fixed;
   bottom:0;
   width:100%;
   background:#111827;
   padding:10px;
+}
+
+.auth-tabs{
+  display:flex;
+  gap:10px;
 }
