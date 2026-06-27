@@ -4,10 +4,10 @@ const client = window.supabase.createClient(
 );
 
 let user = null;
-let currentReward = null;
+let currentPrize = null;
 
-/* PREMIOS con probabilidad real */
-const rewards = [
+/* PREMIOS (probabilidad real) */
+const prizes = [
   { name:"💩 Piedra", chance:35 },
   { name:"🪙 Moneda", chance:25 },
   { name:"🍀 Suerte", chance:15 },
@@ -17,6 +17,17 @@ const rewards = [
   { name:"🌌 LEGENDARIO", chance:1 }
 ];
 
+/* GENERAR PREMIO REAL */
+function generatePrize(){
+  let r = Math.random()*100;
+  let acc = 0;
+
+  for(let p of prizes){
+    acc += p.chance;
+    if(r <= acc) return p.name;
+  }
+}
+
 /* SCRATCH REAL */
 const canvas = document.getElementById("scratchCanvas");
 const ctx = canvas.getContext("2d");
@@ -25,12 +36,14 @@ function resize(){
   canvas.width = canvas.offsetWidth;
   canvas.height = canvas.offsetHeight;
 
-  ctx.fillStyle="#777";
+  ctx.fillStyle = "#777";
   ctx.fillRect(0,0,canvas.width,canvas.height);
 }
-resize();
 
-let drawing=false;
+resize();
+window.addEventListener("resize", resize);
+
+let drawing = false;
 
 function pos(e){
   const r = canvas.getBoundingClientRect();
@@ -54,71 +67,39 @@ canvas.addEventListener("touchend",()=>drawing=false);
 
 canvas.addEventListener("mousemove",(e)=>{
   if(!drawing) return;
-  const p=pos(e);
+  const p = pos(e);
   scratch(p.x,p.y);
 });
 
 canvas.addEventListener("touchmove",(e)=>{
   if(!drawing) return;
-  const p=pos(e);
+  const p = pos(e);
   scratch(p.x,p.y);
 });
 
-/* PREMIO REAL (respeta probabilidad) */
-function getReward(){
-  let r=Math.random()*100;
-  let acc=0;
-
-  for(let i of rewards){
-    acc+=i.chance;
-    if(r<=acc) return i.name;
-  }
-}
+/* INICIAR PRIZE AL CARGAR */
+window.onload = () => {
+  currentPrize = generatePrize();
+};
 
 /* CANJEAR */
-document.getElementById("claimBtn").onclick=async()=>{
-
-  currentReward=getReward();
+document.getElementById("claimBtn").onclick = async () => {
 
   if(!user){
     alert("Debes iniciar sesión");
     return;
   }
 
+  document.getElementById("prizeText").innerText = currentPrize;
+  document.getElementById("result").innerText = "🎉 Premio obtenido";
+
   await client.from("rewards").insert([{
     user_id:user.id,
-    reward_name:currentReward
+    reward_name:currentPrize
   }]);
-
-  document.getElementById("hiddenPrize").innerText=currentReward;
-  document.getElementById("result").innerText="🎉 Premio obtenido";
 };
 
-/* PERFIL PANEL */
-document.getElementById("profileBtn").onclick=()=>{
-  document.getElementById("sidePanel").classList.toggle("hidden");
+/* PERFIL */
+document.getElementById("profileBtn").onclick = () => {
+  document.getElementById("sideMenu").classList.toggle("hidden");
 };
-
-/* LOGIN SIMPLE */
-async function login(email,password){
-  const {data}=await client.auth.signInWithPassword({
-    email,password
-  });
-
-  user=data.user;
-}
-
-/* REGISTER SIMPLE */
-async function register(email,password,username){
-  const {data}=await client.auth.signUp({
-    email,password
-  });
-
-  user=data.user;
-
-  await client.from("users").insert([{
-    id:user.id,
-    email,
-    username
-  }]);
-}
