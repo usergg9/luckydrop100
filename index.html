@@ -2,79 +2,60 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>LuckyScratch</title>
-<link rel="stylesheet" href="style.css"/>
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<!-- TOP BAR -->
 <header class="topbar">
-  <button id="profileBtn" class="icon-btn">👤</button>
-  <h1>🎁 LuckyScratch</h1>
+  <button id="profileBtn">👤</button>
+  <h1>LuckyScratch</h1>
 </header>
 
-<!-- MAIN -->
 <main class="container">
 
-  <!-- SCRATCH -->
-  <section class="scratch-card">
-
-    <div id="prizeReveal" class="prize-reveal">🎁 ???</div>
-
+  <div class="scratch-card">
+    <div id="prizeReveal">🎁 ???</div>
     <canvas id="scratchCanvas"></canvas>
+  </div>
 
-  </section>
+  <button id="claimBtn">CANJEAR PREMIO</button>
 
-  <button id="claimBtn" class="claim-btn">CANJEAR PREMIO</button>
-
-  <!-- RANKING -->
-  <section class="ranking">
-    <h2>🏆 Premios raros hoy</h2>
+  <div class="ranking">
+    <h3>🏆 Ranking diario</h3>
     <div id="rankingList">Cargando...</div>
-  </section>
+  </div>
 
 </main>
 
-<!-- OVERLAY -->
+<!-- MENU -->
 <div id="overlay" class="overlay hidden"></div>
 
-<!-- SIDE MENU -->
-<aside id="sideMenu" class="side-menu hidden">
+<div id="sideMenu" class="side-menu hidden">
+  <h3>Perfil</h3>
 
-  <div class="profile-header">
-    <div id="avatar">👤</div>
-    <div>
-      <p id="username">Usuario</p>
-      <p id="email">correo@ejemplo.com</p>
-    </div>
-  </div>
+  <p id="username">Invitado</p>
+  <p id="email">-</p>
 
-  <button id="openRewards">📦 Mis premios</button>
-  <button id="openAvatar">🖼 Cambiar avatar</button>
-  <button id="logoutBtn">🚪 Cerrar sesión</button>
+  <button id="logoutBtn">Cerrar sesión</button>
+</div>
 
-</aside>
-
-<!-- LOGIN MODAL -->
+<!-- LOGIN -->
 <div id="authModal" class="modal hidden">
   <div class="modal-box">
+    <input id="emailInput" placeholder="Email">
+    <input id="passInput" placeholder="Contraseña" type="password">
+    <input id="userInput" placeholder="Nombre usuario">
 
-    <h2>Acceso</h2>
-
-    <input id="emailInput" type="email" placeholder="Email"/>
-    <input id="passInput" type="password" placeholder="Contraseña"/>
-    <input id="userInput" type="text" placeholder="Nombre usuario"/>
-
-    <button id="loginBtn">Iniciar sesión</button>
-    <button id="registerBtn">Registrarse</button>
-
+    <button id="loginBtn">Login</button>
+    <button id="registerBtn">Registro</button>
   </div>
 </div>
 
 <!-- SUPABASE -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/supabase.min.js"></script>
 
 <script>
 const SUPABASE_URL = "https://ybsrkghhgurjgrfukgox.supabase.co";
