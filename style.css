@@ -1,191 +1,154 @@
-/* ====== GLOBAL ====== */
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: Arial, sans-serif;
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial;
 }
 
 body {
-  background: #0b1220;
-  color: white;
-  overflow-x: hidden;
+  background:#0b1220;
+  color:white;
 }
 
-/* ====== TOP BAR ====== */
+/* TOPBAR */
 .topbar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 60px;
-  background: rgba(15, 23, 42, 0.8);
-  backdrop-filter: blur(10px);
-  display: flex;
-  align-items: center;
-  padding: 0 15px;
-  gap: 10px;
-  z-index: 10;
+  position:fixed;
+  top:0;
+  width:100%;
+  height:60px;
+  background:rgba(15,23,42,0.85);
+  display:flex;
+  align-items:center;
+  padding:0 15px;
+  gap:10px;
+  z-index:10;
 }
 
-.topbar h1 {
-  font-size: 18px;
-}
-
-/* ====== BOTÓN PERFIL ====== */
 .icon-btn {
-  background: #1f2937;
-  border: none;
-  padding: 10px;
-  border-radius: 50%;
-  cursor: pointer;
-  font-size: 18px;
-  color: white;
+  border:none;
+  background:#1f2937;
+  color:white;
+  padding:10px;
+  border-radius:50%;
+  cursor:pointer;
 }
 
-/* ====== CONTENEDOR ====== */
+/* CONTAINER */
 .container {
-  padding-top: 80px;
-  width: 100%;
-  max-width: 500px;
-  margin: auto;
-  text-align: center;
+  padding-top:80px;
+  max-width:500px;
+  margin:auto;
+  text-align:center;
 }
 
-/* ====== SCRATCH ====== */
+/* SCRATCH */
 .scratch-card {
-  position: relative;
-  width: 100%;
-  height: 220px;
-  margin: 20px auto;
-  border-radius: 16px;
-  overflow: hidden;
-  background: linear-gradient(135deg, #1f2937, #111827);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+  position:relative;
+  width:100%;
+  height:260px;
+  margin:20px auto;
+  border-radius:16px;
+  overflow:hidden;
+  background:linear-gradient(135deg,#1f2937,#111827);
 }
 
-/* lo que se ve debajo */
-.prize-reveal {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 22px;
-  z-index: 1;
-}
-
-/* canvas scratch */
 #scratchCanvas {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  z-index: 2;
-  touch-action: none;
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  z-index:2;
+  touch-action:none;
 }
 
-/* ====== BOTÓN ====== */
+.prize-reveal {
+  position:absolute;
+  inset:0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:22px;
+  z-index:1;
+}
+
+/* BUTTON */
 .claim-btn {
-  margin-top: 15px;
-  padding: 12px 20px;
-  border: none;
-  border-radius: 10px;
-  background: #2563eb;
-  color: white;
-  cursor: pointer;
-  font-weight: bold;
+  margin-top:15px;
+  padding:12px 18px;
+  border:none;
+  border-radius:10px;
+  background:#2563eb;
+  color:white;
+  font-weight:bold;
 }
 
-/* ====== RANKING ====== */
+/* RANKING */
 .ranking {
-  margin-top: 25px;
-  background: rgba(255,255,255,0.05);
-  padding: 15px;
-  border-radius: 12px;
+  margin-top:25px;
+  padding:15px;
+  background:rgba(255,255,255,0.05);
+  border-radius:12px;
 }
 
-#rankingList {
-  margin-top: 10px;
-  font-size: 14px;
-  opacity: 0.9;
-}
-
-/* ====== OVERLAY ====== */
+/* OVERLAY */
 .overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.5);
-  z-index: 19;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.5);
+  z-index:19;
 }
 
-/* ====== SIDE MENU ====== */
+/* SIDE MENU */
 .side-menu {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 25%;
-  min-width: 260px;
-  height: 100%;
-  background: rgba(17,24,39,0.95);
-  backdrop-filter: blur(12px);
-  z-index: 20;
-  padding: 15px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+  position:fixed;
+  top:0;
+  left:0;
+  width:25%;
+  min-width:260px;
+  height:100%;
+  background:rgba(17,24,39,0.95);
+  z-index:20;
+  padding:15px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
 }
 
 .profile-header {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  margin-bottom: 15px;
+  display:flex;
+  gap:10px;
+  align-items:center;
 }
 
-/* ====== MODAL ====== */
+/* MODAL */
 .modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.6);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 30;
+  position:fixed;
+  inset:0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:rgba(0,0,0,0.6);
+  z-index:30;
 }
 
 .modal-box {
-  background: #111827;
-  padding: 20px;
-  border-radius: 12px;
-  width: 90%;
-  max-width: 350px;
-  text-align: center;
+  background:#111827;
+  padding:20px;
+  border-radius:12px;
+  width:90%;
+  max-width:350px;
 }
 
 input {
-  width: 100%;
-  padding: 10px;
-  margin: 5px 0;
-  border-radius: 8px;
-  border: none;
-  background: #1f2937;
-  color: white;
-}
-
-button {
-  padding: 10px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
+  width:100%;
+  padding:10px;
+  margin:5px 0;
+  border:none;
+  border-radius:8px;
+  background:#1f2937;
+  color:white;
 }
 
 .hidden {
-  display: none !important;
+  display:none !important;
 }
