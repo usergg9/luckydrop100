@@ -14,20 +14,18 @@
   <button id="profileBtn">👤</button>
 </div>
 
-<!-- SIDEBAR PROFILE -->
-<div id="sidePanel" class="hidden">
-
-  <div class="profileHeader">
+<!-- SIDE MENU -->
+<div id="sideMenu" class="hidden">
+  <div class="sideHeader">
     <div id="avatar">👤</div>
     <div>
-      <p id="pName"></p>
-      <p id="pEmail"></p>
+      <p id="usernameText"></p>
+      <p id="emailText"></p>
     </div>
   </div>
 
-  <button id="openMyRewards">📦 Mis premios</button>
+  <button id="openHistory">📦 Mis premios</button>
   <button id="logoutBtn">🚪 Cerrar sesión</button>
-
 </div>
 
 <!-- APP -->
@@ -35,14 +33,14 @@
 
 <h1>🎁 LuckyScratch</h1>
 
-<div class="scratch-container">
+<div class="scratch-box">
+  <div id="prizeText">🎁 Rasca para descubrir</div>
   <canvas id="scratchCanvas"></canvas>
-  <div id="hiddenPrize"></div>
 </div>
 
 <button id="claimBtn">CANJEAR PREMIO</button>
 
-<div id="result"></div>
+<p id="result"></p>
 
 </div>
 
