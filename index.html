@@ -13,24 +13,27 @@
 
 <header>
 <h1>🎁 LuckyScratch</h1>
-<p>Te quedan: <span id="tries">3</span> intentos</p>
+<p>Intentos: <span id="tries">3</span></p>
 </header>
 
 <main>
 
+<!-- SCRATCH REAL -->
 <section class="scratch-box">
 
-<div id="scratchArea">
-🎟️ RASCA AQUÍ
-</div>
+<div class="scratch-wrapper">
+  <canvas id="scratchCanvas"></canvas>
 
-<button id="scratchBtn">RASCAR</button>
-<button id="claimBtn">RECLAMAR PREMIO</button>
+  <div id="hiddenPrize">
+    🎁 RASCA PARA DESCUBRIR
+  </div>
+</div>
 
 <div id="result"></div>
 
 </section>
 
+<!-- PANEL -->
 <aside class="panel">
 
 <h3>🎁 Probabilidades</h3>
@@ -44,8 +47,6 @@
 <li>🌌 LEGENDARIO — 1%</li>
 </ul>
 
-<button id="openStats">📊 Ver ganados hoy</button>
-
 </aside>
 
 </main>
@@ -54,18 +55,12 @@
 <div id="authBox">
 
 <input id="username" placeholder="Nombre de usuario">
-<input id="email" placeholder="Email">
+<input id="email" type="email" placeholder="Email">
 <input id="password" type="password" placeholder="Contraseña">
 
 <button id="registerBtn">Registrarse</button>
 <button id="loginBtn">Iniciar sesión</button>
 
-</div>
-
-<!-- MODAL -->
-<div id="statsModal" style="display:none;">
-<div id="statsContent"></div>
-<button id="closeStats">Cerrar</button>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
