@@ -1,72 +1,81 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LuckyScratch</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LuckyScratch</title>
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-  <div class="app">
+<div class="app">
 
-    <header>
-      <h1>🎁 LuckyScratch</h1>
-      <p>Rasca 1 vez al día</p>
-    </header>
+<header>
+<h1>🎁 LuckyScratch</h1>
+<p>Te quedan: <span id="tries">3</span> intentos</p>
+</header>
 
-    <main>
+<main>
 
-      <section class="scratch-box">
-        <div id="scratchArea">🎟️ RASCA AQUÍ</div>
+<section class="scratch-box">
 
-        <button id="scratchBtn">RASCAR</button>
-        <button id="claimBtn">RECLAMAR PREMIO</button>
+<div id="scratchArea">
+🎟️ RASCA AQUÍ
+</div>
 
-        <div id="result"></div>
-      </section>
+<button id="scratchBtn">RASCAR</button>
+<button id="claimBtn">RECLAMAR PREMIO</button>
 
-      <aside class="panel">
-        <h3>🎁 Probabilidades</h3>
-        <ul>
-          <li>💩 Piedra del Desierto — 35%</li>
-          <li>🪙 Moneda Antigua — 25%</li>
-          <li>🍀 Suerte (+1 karma) — 15%</li>
-          <li>💎 Cristal del Sueño — 12%</li>
-          <li>🧠 Chip de Inteligencia — 8%</li>
-          <li>👑 Corona Elegida — 4%</li>
-          <li>🌌 LEGENDARIO Universo — 1%</li>
-        </ul>
+<div id="result"></div>
 
-        <h3>📊 Ganados hoy</h3>
-        <div id="stats"></div>
-      </aside>
+</section>
 
-    </main>
+<aside class="panel">
 
-    <!-- LOGIN -->
-    <div id="authBox">
-      <input id="email" placeholder="Email" type="email">
-      <input id="password" placeholder="Contraseña" type="password">
+<h3>🎁 Probabilidades</h3>
+<ul>
+<li>💩 Piedra — 35%</li>
+<li>🪙 Moneda — 25%</li>
+<li>🍀 Suerte — 15%</li>
+<li>💎 Cristal — 12%</li>
+<li>🧠 IA — 8%</li>
+<li>👑 Corona — 4%</li>
+<li>🌌 LEGENDARIO — 1%</li>
+</ul>
 
-      <button id="registerBtn">Registrarse</button>
-      <button id="loginBtn">Iniciar sesión</button>
-    </div>
+<button id="openStats">📊 Ver ganados hoy</button>
 
-  </div>
+</aside>
 
-  <!-- SUPABASE SDK -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</main>
 
-  <!-- CONFIGURACIÓN (IMPORTANTE: SOLO AQUÍ) -->
-  <script>
-    const SUPABASE_URL = "https://ybsrkghhgurjgrfukgox.supabase.co";
-    const SUPABASE_KEY = "sb_publishable_gxjNTA6NmdNdyt46l11XBg_3NlCFRrX";
-  </script>
+<!-- LOGIN -->
+<div id="authBox">
 
-  <!-- TU LÓGICA -->
-  <script src="app.js"></script>
+<input id="username" placeholder="Nombre de usuario">
+<input id="email" placeholder="Email">
+<input id="password" type="password" placeholder="Contraseña">
+
+<button id="registerBtn">Registrarse</button>
+<button id="loginBtn">Iniciar sesión</button>
+
+</div>
+
+<!-- MODAL -->
+<div id="statsModal" style="display:none;">
+<div id="statsContent"></div>
+<button id="closeStats">Cerrar</button>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+const SUPABASE_URL = "https://ybsrkghhgurjgrfukgox.supabase.co";
+const SUPABASE_KEY = "sb_publishable_gxjNTA6NmdNdyt46l11XBg_3NlCFRrX";
+</script>
+
+<script src="app.js"></script>
 
 </body>
 </html>
