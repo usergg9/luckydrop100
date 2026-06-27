@@ -13,12 +13,62 @@ const rewards = [
   { name: "🪙 Moneda", chance: 25 },
   { name: "🍀 Suerte", chance: 15 },
   { name: "💎 Cristal", chance: 12 },
-  { name: "🧠 Chip IA", chance: 8 },
+  { name: "🧠 IA", chance: 8 },
   { name: "👑 Corona", chance: 4 },
   { name: "🌌 LEGENDARIO", chance: 1 }
 ];
 
-/* SCRATCH */
+/* RASCA REAL (CANVAS) */
+const canvas = document.getElementById("scratchCanvas");
+const ctx = canvas.getContext("2d");
+
+function resizeCanvas() {
+  canvas.width = canvas.offsetWidth;
+  canvas.height = canvas.offsetHeight;
+
+  ctx.fillStyle = "#999";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+}
+
+resizeCanvas();
+
+window.addEventListener("resize", resizeCanvas);
+
+let drawing = false;
+
+function getPos(e) {
+  const rect = canvas.getBoundingClientRect();
+  return {
+    x: (e.touches ? e.touches[0].clientX : e.clientX) - rect.left,
+    y: (e.touches ? e.touches[0].clientY : e.clientY) - rect.top
+  };
+}
+
+function scratch(x, y) {
+  ctx.globalCompositeOperation = "destination-out";
+  ctx.beginPath();
+  ctx.arc(x, y, 20, 0, Math.PI * 2);
+  ctx.fill();
+}
+
+canvas.addEventListener("mousedown", () => drawing = true);
+canvas.addEventListener("mouseup", () => drawing = false);
+canvas.addEventListener("touchstart", () => drawing = true);
+canvas.addEventListener("touchend", () => drawing = false);
+
+canvas.addEventListener("mousemove", (e) => {
+  if (!drawing) return;
+  const pos = getPos(e);
+  scratch(pos.x, pos.y);
+});
+
+canvas.addEventListener("touchmove", (e) => {
+  if (!drawing) return;
+  const pos = getPos(e);
+  scratch(pos.x, pos.y);
+});
+
+/* PREMIOS */
 function getReward() {
   let r = Math.random() * 100;
   let acc = 0;
@@ -29,57 +79,14 @@ function getReward() {
   }
 }
 
-/* RASCAR */
-document.getElementById("scratchBtn").onclick = () => {
+/* LOGIN */
+async function register() {
 
-  if (tries <= 0) {
-    alert("No te quedan intentos hoy");
-    return;
-  }
+  const email = email.value;
+  const password = password.value;
+  const username = username.value;
 
-  tries--;
-  document.getElementById("tries").innerText = tries;
-
-  currentReward = getReward();
-
-  document.getElementById("result").innerHTML =
-    "🎉 Has conseguido: <b>" + currentReward + "</b>";
-};
-
-/* RECLAMAR */
-document.getElementById("claimBtn").onclick = async () => {
-
-  if (!user) {
-    alert("Debes iniciar sesión");
-    return;
-  }
-
-  if (!currentReward) {
-    alert("Primero rasca");
-    return;
-  }
-
-  await client.from("rewards").insert([{
-    user_id: user.id,
-    reward_name: currentReward
-  }]);
-
-  alert("Premio guardado");
-};
-
-/* REGISTER */
-document.getElementById("registerBtn").onclick = async () => {
-
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
-  const username = document.getElementById("username").value;
-
-  const { data, error } = await client.auth.signUp({
-    email,
-    password
-  });
-
-  if (error) return alert(error.message);
+  const { data } = await client.auth.signUp({ email, password });
 
   user = data.user;
 
@@ -88,24 +95,20 @@ document.getElementById("registerBtn").onclick = async () => {
     email,
     username
   }]);
+}
 
-  alert("Usuario creado");
-};
+async function login() {
 
-/* LOGIN */
-document.getElementById("loginBtn").onclick = async () => {
-
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
-
-  const { data, error } = await client.auth.signInWithPassword({
-    email,
-    password
+  const { data } = await client.auth.signInWithPassword({
+    email: email.value,
+    password: password.value
   });
 
-  if (error) return alert(error.message);
-
   user = data.user;
+}
 
-  alert("Sesión iniciada");
-};
+/* BOTONES */
+registerBtn.onclick = register;
+loginBtn.onclick = login;
+
+/* RECLAMAR (opcional si quieres después) */
