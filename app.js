@@ -1,5 +1,3 @@
-const SUPABASE_URL = "https://ybsrkghhgurjgrfukgox.supabase.co";
-const SUPABASE_KEY = "sb_publishable_gxjNTA6NmdNdyt46l11XBg_3NlCFRrX";
 let user = null;
 let currentReward = null;
 
