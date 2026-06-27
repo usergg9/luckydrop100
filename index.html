@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LuckyScratch</title>
+<title>LuckyDrop 100</title>
+
 <link rel="stylesheet" href="style.css">
 </head>
 
@@ -11,7 +12,7 @@
 
 <header class="topbar">
   <button id="profileBtn">👤</button>
-  <h1>LuckyScratch</h1>
+  <h1>LuckyDrop100</h1>
 </header>
 
 <main class="container">
@@ -25,44 +26,67 @@
 
 </main>
 
-<!-- MENU -->
+<!-- OVERLAY -->
 <div id="overlay" class="overlay hidden"></div>
 
+<!-- SIDE MENU -->
 <div id="sideMenu" class="side-menu hidden">
-  <button id="btnAvatars">Avatares</button>
-  <button id="btnRewards">Mis premios</button>
-  <button id="btnLogout">Cerrar sesión</button>
+
+  <div id="menuMain">
+    <h3>Perfil</h3>
+
+    <button id="btnAvatars">🖼 Avatares</button>
+    <button id="btnRewards">📦 Mis premios</button>
+    <button id="btnLogout">🚪 Cerrar sesión</button>
+  </div>
+
+  <div id="menuAvatars" class="hidden">
+    <button id="back1">← Volver</button>
+    <div class="avatars">
+      <span>👤</span><span>😎</span><span>🤖</span><span>🦊</span><span>🐼</span>
+      <span>🐸</span><span>🦁</span><span>👻</span><span>🐧</span><span>🐱</span>
+    </div>
+  </div>
+
+  <div id="menuRewards" class="hidden">
+    <button id="back2">← Volver</button>
+    <div id="myRewards"></div>
+  </div>
+
 </div>
 
 <!-- AUTH -->
 <footer class="auth">
 
-  <button id="showLogin">Login</button>
-  <button id="showRegister">Registro</button>
+  <div class="auth-tabs">
+    <button id="showLogin">Login</button>
+    <button id="showRegister">Registro</button>
+  </div>
 
   <div id="loginBox">
-    <input id="loginEmail">
-    <input id="loginPass" type="password">
+    <input id="loginEmail" placeholder="Email">
+    <input id="loginPass" type="password" placeholder="Password">
     <button id="loginBtn">Entrar</button>
   </div>
 
   <div id="registerBox" class="hidden">
-    <input id="regUser">
-    <input id="regEmail">
-    <input id="regPass" type="password">
-    <button id="registerBtn">Crear</button>
+    <input id="regUser" placeholder="Usuario">
+    <input id="regEmail" placeholder="Email">
+    <input id="regPass" type="password" placeholder="Password">
+    <button id="registerBtn">Crear cuenta</button>
   </div>
 
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/supabase.min.js"></script>
+<!-- SUPABASE (IMPORTANTE: CDN ESTABLE) -->
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 
 <script>
-const SUPABASE_URL="https://ybsrkghhgurjgrfukgox.supabase.co";
-const SUPABASE_KEY="sb_publishable_gxjNTA6NmdNdyt46l11XBg_3NlCFRrX";
+const SUPABASE_URL = "https://ybsrkghhgurjgrfukgox.supabase.co";
+const SUPABASE_KEY = "sb_publishable_gxjNTA6NmdNdyt46l11XBg_3NlCFRrX";
 </script>
 
-<script src="app.js"></script>
+<script src="app.js" defer></script>
 
 </body>
 </html>
