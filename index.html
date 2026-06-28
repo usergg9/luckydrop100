@@ -3,51 +3,468 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>LuckyDrop</title>
+
 <link rel="stylesheet" href="style.css">
+
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+
 </head>
 
 <body>
 
+<!-- =========================
+     APP BACKGROUND
+========================= -->
+<div class="bg-gradient"></div>
+
+<!-- =========================
+     TOP HEADER
+========================= -->
 <header class="topbar">
-  <div id="profileBtn">👤</div>
-  <h1>LuckyDrop</h1>
-</header>
 
-<main class="main">
-
-  <div class="scratch-container">
-    <div id="rewardText">🎁 ???</div>
-    <canvas id="scratch"></canvas>
+  <div id="profileBtn" class="profile-btn">
+    👤
   </div>
 
-  <button id="claimBtn" disabled>Canjear premio</button>
+  <div class="logo">
+    LuckyDrop
+  </div>
+
+  <button id="openLeaderboard" class="top-btn">
+    🏆 Top
+  </button>
+
+</header>
+
+<!-- =========================
+     MAIN CONTAINER
+========================= -->
+<main class="main-container">
+
+  <!-- SCRATCH AREA -->
+  <section class="scratch-wrapper">
+
+    <!-- REWARD (BEHIND SCRATCH LAYER) -->
+    <div id="rewardText" class="reward-text">
+      🎁 Premio oculto
+    </div>
+
+    <!-- SCRATCH CANVAS -->
+    <canvas id="scratchCanvas"></canvas>
+
+    <!-- PROGRESS -->
+    <div class="scratch-progress">
+      <div class="bar"></div>
+      <span id="scratchPercent">0%</span>
+    </div>
+
+  </section>
+
+  <!-- ACTION BUTTONS -->
+  <div class="actions">
+
+    <button id="claimBtn" disabled>
+      Canjear premio
+    </button>
+
+    <button id="resetBtn">
+      Volver a rascar
+    </button>
+
+  </div>
+
+  <!-- INFO -->
+  <p class="info">
+    Rasca la tarjeta para revelar tu premio (3 intentos diarios)
+  </p>
 
 </main>
 
-<!-- PANEL PERFIL -->
-<div id="profilePanel" class="hidden">
-  <h3>Perfil</h3>
+<!-- =========================
+     OVERLAY SYSTEM
+========================= -->
+<div id="overlay" class="overlay hidden"></div>
 
-  <div id="authArea">
-    <input id="email" placeholder="Email">
-    <input id="password" placeholder="Contraseña">
+<!-- =========================
+     PROFILE PANEL (EMPTY BASE)
+========================= -->
+<aside id="profilePanel" class="profile-panel hidden">
 
-    <button id="loginBtn">Login</button>
-    <button id="registerBtn">Registro</button>
+  <div class="profile-header">
+
+    <h3>Perfil</h3>
+
+    <button id="closeProfile">✖</button>
+
   </div>
 
-  <button id="closeProfile">Cerrar</button>
-</div>
+  <!-- CONTENIDO SE AÑADE EN PARTE 2 -->
 
-<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+</aside>
 
-<script>
-const SUPABASE_URL = "https://ybsrkghhgurjgrfukgox.supabase.co";
-const SUPABASE_KEY = "TU_KEY";
-</script>
+<!-- =========================
+     MODAL CONTAINER BASE
+========================= -->
+<div id="modalContainer"></div>
 
+<!-- =========================
+     SCRIPTS
+========================= -->
 <script src="app.js"></script>
 
 </body>
 </html>
+<!-- =========================
+     AUTH STATE (NO LOGUEADO)
+========================= -->
+<div id="authState" class="auth-state">
+
+  <div class="auth-avatar">
+    👤
+  </div>
+
+  <p class="auth-title">Bienvenido a LuckyDrop</p>
+
+  <div class="auth-buttons">
+
+    <button id="showRegister">
+      Registrarse
+    </button>
+
+    <button id="showLogin">
+      Iniciar sesión
+    </button>
+
+  </div>
+
+</div>
+
+<!-- =========================
+     LOGIN FORM
+========================= -->
+<div id="loginBox" class="auth-box hidden">
+
+  <h3>Iniciar sesión</h3>
+
+  <input id="loginEmail" type="email" placeholder="Correo">
+  <input id="loginPassword" type="password" placeholder="Contraseña">
+
+  <button id="loginBtn">
+    Entrar
+  </button>
+
+</div>
+
+<!-- =========================
+     REGISTER FORM
+========================= -->
+<div id="registerBox" class="auth-box hidden">
+
+  <h3>Crear cuenta</h3>
+
+  <input id="regUsername" type="text" placeholder="Usuario">
+  <input id="regEmail" type="email" placeholder="Correo">
+  <input id="regPassword" type="password" placeholder="Contraseña">
+
+  <button id="registerBtn">
+    Registrarse
+  </button>
+
+</div>
+
+<!-- =========================
+     USER LOGGED VIEW
+========================= -->
+<div id="userState" class="user-state hidden">
+
+  <!-- USER HEADER -->
+  <div class="user-header">
+
+    <div id="userAvatar" class="user-avatar">
+      👤
+    </div>
+
+    <div class="user-info">
+
+      <p id="usernameText">Usuario</p>
+      <p id="emailText">correo@ejemplo.com</p>
+
+    </div>
+
+  </div>
+
+  <!-- MENU -->
+  <div class="user-menu">
+
+    <button id="openAvatars">
+      🖼 Avatares
+    </button>
+
+    <button id="openRewards">
+      🎁 Mis premios
+    </button>
+
+    <button id="openStats">
+      📊 Estadísticas
+    </button>
+
+    <button id="logoutBtn" class="danger">
+      🚪 Cerrar sesión
+    </button>
+
+  </div>
+
+</div>
+
+<!-- =========================
+     OVERLAY GLOBAL
+========================= -->
+<div id="globalOverlay" class="overlay hidden"></div>
+
+<!-- =========================
+     AVATAR MODAL
+========================= -->
+<div id="avatarModal" class="modal hidden">
+
+  <div class="modal-box">
+
+    <div class="modal-header">
+      <h3>Elige tu avatar</h3>
+      <button class="closeModal" data-close="avatarModal">✖</button>
+    </div>
+
+    <div class="avatar-grid">
+
+      <div class="avatar-option">😀</div>
+      <div class="avatar-option">😎</div>
+      <div class="avatar-option">🤖</div>
+      <div class="avatar-option">👽</div>
+      <div class="avatar-option">🐱</div>
+      <div class="avatar-option">🐶</div>
+      <div class="avatar-option">🦊</div>
+      <div class="avatar-option">🐼</div>
+      <div class="avatar-option">🐸</div>
+      <div class="avatar-option">🦁</div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- =========================
+     REWARDS MODAL
+========================= -->
+<div id="rewardsModal" class="modal hidden">
+
+  <div class="modal-box">
+
+    <div class="modal-header">
+      <h3>Mis premios</h3>
+      <button class="closeModal" data-close="rewardsModal">✖</button>
+    </div>
+
+    <div id="rewardsList" class="rewards-list">
+      <!-- JS insertará premios -->
+    </div>
+
+  </div>
+
+</div>
+
+<!-- =========================
+     STATS MODAL
+========================= -->
+<div id="statsModal" class="modal hidden">
+
+  <div class="modal-box">
+
+    <div class="modal-header">
+      <h3>Estadísticas globales</h3>
+      <button class="closeModal" data-close="statsModal">✖</button>
+    </div>
+
+    <div class="stats-grid">
+
+      <div>Piedra: <span id="statStone">0</span></div>
+      <div>Moneda: <span id="statCoin">0</span></div>
+      <div>Suerte: <span id="statLuck">0</span></div>
+      <div>Cristal: <span id="statCrystal">0</span></div>
+      <div>Chip IA: <span id="statAI">0</span></div>
+      <div>Corona: <span id="statCrown">0</span></div>
+      <div>Legendario: <span id="statLegendary">0</span></div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- =========================
+     LEADERBOARD MODAL
+========================= -->
+<div id="leaderboardModal" class="modal hidden">
+
+  <div class="modal-box">
+
+    <div class="modal-header">
+      <h3>Jugadores legendarios</h3>
+      <button class="closeModal" data-close="leaderboardModal">✖</button>
+    </div>
+
+    <div id="leaderboardList" class="leaderboard-list">
+      <!-- JS insertará ranking -->
+    </div>
+
+  </div>
+
+</div>
+
+<!-- =========================
+     LOGOUT CONFIRM MODAL
+========================= -->
+<div id="logoutModal" class="modal hidden">
+
+  <div class="modal-box small">
+
+    <h3>¿Cerrar sesión?</h3>
+
+    <p>Se perderá el acceso a tu cuenta.</p>
+
+    <div class="modal-actions">
+
+      <button id="cancelLogout">
+        Cancelar
+      </button>
+
+      <button id="confirmLogout" class="danger">
+        Cerrar sesión
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- =========================
+     SCRATCH PROGRESS SYSTEM
+========================= -->
+<div id="scratchUI" class="scratch-ui">
+
+  <div class="scratch-bar">
+    <div id="scratchFill" class="scratch-fill"></div>
+  </div>
+
+  <span id="scratchPercent">0%</span>
+
+</div>
+
+<!-- =========================
+     DAILY LIMIT INDICATOR
+========================= -->
+<div id="dailyLimit" class="daily-limit">
+
+  <p>Intentos diarios:</p>
+
+  <span id="attemptsLeft">3</span> / 3
+
+</div>
+
+<!-- =========================
+     LIVE STATUS INDICATOR
+========================= -->
+<div class="live-indicator">
+
+  <span class="dot"></span>
+  <span>En vivo</span>
+
+</div>
+
+<!-- =========================
+     TOAST SYSTEM
+========================= -->
+<div id="toastContainer" class="toast-container"></div>
+
+<!-- =========================
+     SCRATCH EFFECT LAYER
+========================= -->
+<div id="scratchEffect" class="scratch-effect hidden"></div>
+
+<!-- =========================
+     CLICK BLOCKER (MODALS FIX)
+========================= -->
+<div id="clickBlocker" class="click-blocker hidden"></div>
+
+<!-- =========================
+     REWARD ITEM TEMPLATE
+========================= -->
+<template id="rewardTemplate">
+
+  <div class="reward-item">
+
+    <div class="reward-icon">🎁</div>
+
+    <div class="reward-data">
+
+      <p class="reward-name"></p>
+      <p class="reward-time"></p>
+
+    </div>
+
+  </div>
+
+</template>
+
+<!-- =========================
+     LEADERBOARD TEMPLATE
+========================= -->
+<template id="leaderTemplate">
+
+  <div class="leader-item">
+
+    <div class="leader-avatar">👑</div>
+
+    <div class="leader-info">
+
+      <p class="leader-name"></p>
+      <p class="leader-reward">LEGENDARIO</p>
+
+    </div>
+
+    <div class="leader-date"></div>
+
+  </div>
+
+</template>
+
+<!-- =========================
+     STATS TEMPLATE
+========================= -->
+<template id="statsTemplate">
+
+  <div class="stat-card">
+
+    <h4 class="stat-title"></h4>
+    <p class="stat-value"></p>
+
+  </div>
+
+</template>
+
+<!-- =========================
+     AVATAR TEMPLATE
+========================= -->
+<template id="avatarTemplate">
+
+  <div class="avatar-option">
+    <span class="avatar-icon"></span>
+  </div>
+
+</template>
+
+<!-- =========================
+     END OF INDEX STRUCTURE
+========================= -->
