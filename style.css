@@ -1,87 +1,336 @@
-body{
-  margin:0;
-  font-family:Arial;
-  background:#0b1220;
-  color:white;
+
+/* =========================
+   RESET
+========================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
-.topbar{
-  display:flex;
-  gap:10px;
-  padding:10px;
-  background:#111827;
-  align-items:center;
+body {
+  background: #0b0f1a;
+  color: white;
+  overflow-x: hidden;
 }
 
-.container{
-  text-align:center;
-  padding:20px;
+/* =========================
+   BACKGROUND
+========================= */
+
+.bg-gradient {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at top, #1b2a4a, #0b0f1a);
+  z-index: -1;
 }
 
-/* SCRATCH */
-.scratch-card{
-  width:90%;
-  max-width:420px;
-  height:260px;
-  margin:auto;
-  position:relative;
-  background:#1f2937;
-  border-radius:12px;
-  overflow:hidden;
+/* =========================
+   TOP BAR
+========================= */
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  backdrop-filter: blur(12px);
+  background: rgba(255,255,255,0.05);
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
-#scratchCanvas{
-  position:absolute;
-  inset:0;
+.logo {
+  font-size: 20px;
+  font-weight: bold;
+  letter-spacing: 1px;
 }
 
-#prizeReveal{
-  position:absolute;
-  inset:0;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  font-size:22px;
+.profile-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: 0.2s;
 }
 
-/* MENU */
-.overlay{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,0.5);
+.profile-btn:hover {
+  transform: scale(1.1);
 }
 
-.side-menu{
-  position:fixed;
-  left:0;
-  top:0;
-  width:260px;
-  height:100%;
-  background:#111827;
-  padding:10px;
-  overflow:auto;
+.top-btn {
+  background: linear-gradient(135deg, #4f46e5, #06b6d4);
+  border: none;
+  padding: 8px 12px;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
 }
 
-.hidden{
-  display:none;
+/* =========================
+   MAIN
+========================= */
+
+.main-container {
+  padding: 30px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.avatars span{
-  font-size:24px;
-  margin:5px;
-  cursor:pointer;
+.scratch-wrapper {
+  position: relative;
+  width: 320px;
+  height: 220px;
+  border-radius: 20px;
+  overflow: hidden;
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  margin-bottom: 20px;
 }
 
-/* AUTH */
-.auth{
-  position:fixed;
-  bottom:0;
-  width:100%;
-  background:#111827;
-  padding:10px;
+.reward-text {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 22px;
+  z-index: 1;
 }
 
-.auth-tabs{
-  display:flex;
-  gap:10px;
+/* =========================
+   CANVAS
+========================= */
+
+canvas {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+}
+
+/* =========================
+   ACTION BUTTONS
+========================= */
+
+.actions {
+  display: flex;
+  gap: 10px;
+}
+
+button {
+  border: none;
+  padding: 10px 15px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+button:hover {
+  transform: scale(1.05);
+}
+
+#claimBtn {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  color: white;
+}
+
+#resetBtn {
+  background: rgba(255,255,255,0.1);
+  color: white;
+}
+
+.info {
+  margin-top: 15px;
+  font-size: 12px;
+  opacity: 0.6;
+}
+
+/* =========================
+   OVERLAYS
+========================= */
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(5px);
+  z-index: 50;
+}
+
+.hidden {
+  display: none;
+}
+
+/* =========================
+   PROFILE PANEL
+========================= */
+
+.profile-panel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 300px;
+  height: 100%;
+  background: rgba(20,20,30,0.95);
+  backdrop-filter: blur(15px);
+  padding: 20px;
+  z-index: 100;
+}
+
+.profile-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.user-header {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.user-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.user-menu button {
+  width: 100%;
+  margin-bottom: 10px;
+  background: rgba(255,255,255,0.08);
+  color: white;
+}
+
+/* =========================
+   AUTH BOX
+========================= */
+
+.auth-box {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.auth-box input {
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  background: rgba(255,255,255,0.1);
+  color: white;
+}
+
+.auth-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.auth-state {
+  text-align: center;
+  padding: 20px;
+}
+
+/* =========================
+   MODALS
+========================= */
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(25,25,35,0.95);
+  backdrop-filter: blur(15px);
+  padding: 20px;
+  border-radius: 15px;
+  z-index: 200;
+  width: 90%;
+  max-width: 400px;
+}
+
+.modal-box {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* =========================
+   AVATARS
+========================= */
+
+.avatar-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+}
+
+.avatar-option {
+  background: rgba(255,255,255,0.1);
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: center;
+}
+
+/* =========================
+   LISTS
+========================= */
+
+.rewards-list,
+.leaderboard-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* =========================
+   STATS
+========================= */
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+/* =========================
+   TOASTS
+========================= */
+
+.toast-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
+
+.toast {
+  background: rgba(0,0,0,0.7);
+  padding: 10px 15px;
+  border-radius: 10px;
+  margin-top: 10px;
 }
